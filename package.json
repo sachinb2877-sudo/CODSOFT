@@ -1,0 +1,14 @@
+{
+  "name": "codsoft-certificate-verification",
+  "version": "1.0.0",
+  "description": "CodSoft Certificate Verification System with MongoDB Atlas",
+  "main": "index.html",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@vercel/functions": "^3.10.4",
+    "dotenv": "^18.0.9",
+    "mongodb": "^6.5.0"
+  }
+}

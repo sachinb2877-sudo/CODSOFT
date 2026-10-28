@@ -1,0 +1,17 @@
+{
+  "cleanUrls": true,
+  "rewrites": [
+    {
+      "source": "/admin",
+      "destination": "/admin.html"
+    },
+    {
+      "source": "/qr-generator",
+      "destination": "/qr-generator.html"
+    },
+    {
+      "source": "/((?!api|admin|qr-generator|css|js|favicon.ico|certificate_qr|.*\\..*).*)",
+      "destination": "/index.html"
+    }
+  ]
+}

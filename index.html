@@ -1,0 +1,1779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  
+  <!-- Primary Meta Tags -->
+  <title>Certificate Verification | CodSoft</title>
+  <meta name="title" content="Certificate Verification | CodSoft">
+  <meta name="description" content="Verify internship certificates using a unique certificate ID. Ensure authenticity and validate student achievements instantly with our secure portal.">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#0a2540">
+
+  <!-- Open Graph / Social Sharing -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Certificate Verification | CodSoft">
+  <meta property="og:description" content="Verify internship certificates using a unique certificate ID. Ensure authenticity and validate student achievements instantly.">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230a2540'><path d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+
+  <!-- Base HREF for subpath URL routing (/84920 or /CS/2026/JP/84920) -->
+  <script>
+    if (window.location.protocol !== 'file:') {
+      const base = document.createElement('base');
+      base.href = '/';
+      document.head.appendChild(base);
+    }
+  </script>
+
+  <!-- Stylesheet -->
+  <style>
+/* ===================================================================
+   Certificate Record & Verification Portal Stylesheet
+   Modern, Professional, Responsive, White Background, Navy Accents
+   =================================================================== */
+
+:root {
+  /* Color Palette */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8fafc;
+  --bg-card: #ffffff;
+  --bg-badge-success: #ecfdf5;
+  --bg-badge-navy: #eff6ff;
+  
+  --navy-primary: #0a2540;
+  --navy-dark: #071727;
+  --navy-medium: #1e3a8a;
+  --navy-accent: #2563eb;
+  --navy-light: #3b82f6;
+  --navy-subtle: #dbeafe;
+  
+  --emerald-success: #059669;
+  --emerald-dark: #065f46;
+  --emerald-light: #34d399;
+  
+  --danger: #dc2626;
+  --danger-bg: #fef2f2;
+  --danger-border: #fecaca;
+  
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  --text-light: #94a3b8;
+  
+  --border-light: #e2e8f0;
+  --border-subtle: #f1f5f9;
+  --border-focus: #93c5fd;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(15, 23, 42, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.07), 0 2px 4px -2px rgba(15, 23, 42, 0.05);
+  --shadow-lg: 0 10px 25px -5px rgba(10, 37, 64, 0.08), 0 8px 10px -6px rgba(10, 37, 64, 0.04);
+  --shadow-card: 0 12px 32px -4px rgba(10, 37, 64, 0.06), 0 4px 12px -2px rgba(10, 37, 64, 0.03);
+  
+  /* Radii */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-full: 9999px;
+  
+  /* Typography */
+  --font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', Consolas, monospace;
+}
+
+/* Reset & Box Sizing */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Top Decorative Accent Stripe */
+.accent-stripe {
+  height: 4px;
+  width: 100%;
+  background: linear-gradient(90deg, var(--navy-primary) 0%, var(--navy-medium) 40%, var(--navy-accent) 70%, var(--emerald-success) 100%);
+  position: sticky;
+  top: 0;
+  z-index: 200;
+}
+
+/* Main Navigation Bar */
+.site-nav {
+  background-color: #ffffff;
+  border-bottom: 1px solid var(--border-light);
+  position: sticky;
+  top: 4px;
+  z-index: 150;
+  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.03);
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0.75rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.brand-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 1.25rem;
+  color: var(--navy-primary);
+  letter-spacing: -0.02em;
+}
+
+.brand-logo-icon {
+  width: 30px;
+  height: 30px;
+  color: var(--navy-accent);
+}
+
+.brand-name-highlight {
+  color: var(--navy-accent);
+}
+
+.nav-links-desktop {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  list-style: none;
+}
+
+.nav-links-desktop a {
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  transition: color 0.15s ease;
+  white-space: nowrap;
+}
+
+.nav-links-desktop a:hover,
+.nav-links-desktop a.active {
+  color: var(--navy-accent);
+}
+
+.nav-right-area {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.btn-about-nav {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.5rem 1.25rem;
+  background-color: #ffffff;
+  color: var(--navy-primary) !important;
+  font-weight: 700;
+  font-size: 0.88rem;
+  border: 1.5px solid var(--border-light);
+  border-radius: var(--radius-full);
+  text-decoration: none;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-about-nav:hover {
+  background-color: var(--navy-primary);
+  color: #ffffff !important;
+  border-color: var(--navy-primary);
+  transform: translateY(-1px);
+}
+
+.btn-apply-nav {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.55rem 1.15rem;
+  background-color: var(--navy-accent);
+  color: #ffffff !important;
+  font-weight: 700;
+  font-size: 0.88rem;
+  border-radius: var(--radius-full);
+  text-decoration: none;
+  transition: background-color 0.15s ease, transform 0.1s ease;
+  white-space: nowrap;
+}
+
+.btn-apply-nav:hover {
+  background-color: var(--navy-medium);
+  transform: translateY(-1px);
+}
+
+.mobile-menu-btn {
+  display: none;
+  background: none;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  padding: 0.45rem;
+  cursor: pointer;
+  color: var(--navy-primary);
+}
+
+.mobile-menu-drawer {
+  display: none;
+  background: #ffffff;
+  border-bottom: 1px solid var(--border-light);
+  padding: 1rem 1.25rem;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.mobile-menu-drawer.open {
+  display: flex;
+}
+
+.mobile-menu-drawer a {
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  padding: 0.4rem 0;
+}
+
+@media (max-width: 980px) {
+  .nav-links-desktop {
+    display: none;
+  }
+  .mobile-menu-btn {
+    display: inline-flex;
+  }
+}
+
+/* Page Containers */
+.page-container {
+  flex: 1;
+  max-width: 920px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2.25rem 1.25rem 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* ===================================================================
+   HOME VERIFICATION SEARCH SECTION
+   =================================================================== */
+.home-hero-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.5rem;
+  padding: 2rem 1rem 1rem;
+}
+
+.secure-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background-color: var(--bg-badge-navy);
+  color: var(--navy-accent);
+  border: 1px solid var(--navy-subtle);
+  padding: 0.4rem 1rem;
+  border-radius: var(--radius-full);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.home-hero-title {
+  font-size: 2.35rem;
+  font-weight: 800;
+  color: var(--navy-primary);
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  max-width: 680px;
+}
+
+@media (max-width: 600px) {
+  .home-hero-title {
+    font-size: 1.85rem;
+  }
+}
+
+.home-hero-desc {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  max-width: 650px;
+}
+
+/* Search Box Container */
+.verify-form-card {
+  width: 100%;
+  max-width: 620px;
+  background: #ffffff;
+  border: 1.5px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 1rem;
+  box-shadow: 0 10px 30px -5px rgba(10, 37, 64, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.verify-input-row {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.search-input-wrapper {
+  flex: 1;
+  position: relative;
+  min-width: 220px;
+}
+
+.search-icon-inside {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.verify-input-field {
+  width: 100%;
+  padding: 0.85rem 1rem 0.85rem 2.65rem;
+  border: 1.5px solid var(--border-light);
+  border-radius: var(--radius-md);
+  font-size: 0.98rem;
+  font-family: inherit;
+  outline: none;
+  transition: all 0.15s ease;
+  background-color: var(--bg-secondary);
+}
+
+.verify-input-field:focus {
+  border-color: var(--navy-accent);
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+.btn-verify-submit {
+  padding: 0.85rem 1.6rem;
+  background-color: var(--navy-primary);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.95rem;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.btn-verify-submit:hover {
+  background-color: var(--navy-medium);
+}
+
+.btn-verify-submit:active {
+  transform: scale(0.98);
+}
+
+.sample-helper {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding: 0 0.25rem;
+}
+
+.sample-chip {
+  cursor: pointer;
+  color: var(--navy-accent);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.sample-chip:hover {
+  color: var(--navy-medium);
+}
+
+.search-alert {
+  display: none;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-align: left;
+}
+
+.search-alert.error {
+  background-color: var(--danger-bg);
+  color: var(--danger);
+  border: 1px solid var(--danger-border);
+}
+
+/* 4 Trust Feature Cards Grid */
+.trust-features-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  width: 100%;
+  max-width: 720px;
+  margin-top: 1rem;
+}
+
+@media (max-width: 500px) {
+  .trust-features-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.trust-feature-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 1.15rem 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  text-align: left;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.trust-feature-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+  background: #ffffff;
+}
+
+.trust-icon-box {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  border: 1px solid var(--navy-subtle);
+  color: var(--navy-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.trust-card-title {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--navy-primary);
+  line-height: 1.3;
+}
+
+/* ===================================================================
+   CERTIFICATE RESULT VIEW SECTION
+   =================================================================== */
+.certificate-result-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.back-to-search-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding-bottom: 0.5rem;
+}
+
+.btn-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: none;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  padding: 0.45rem 0.85rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+.btn-back:hover {
+  background-color: var(--bg-secondary);
+  color: var(--navy-primary);
+  border-color: var(--navy-subtle);
+}
+
+/* Hero Status Banner */
+.hero-status-card {
+  text-align: center;
+  background: linear-gradient(180deg, #ffffff 0%, var(--bg-secondary) 100%);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 2.25rem 1.5rem 2rem;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-status-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--navy-medium), var(--navy-accent));
+}
+
+/* Certificate Emblem / Icon */
+.emblem-wrapper {
+  margin: 0 auto 1.25rem;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--navy-primary) 0%, var(--navy-medium) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 18px rgba(10, 37, 64, 0.16);
+  position: relative;
+}
+
+.emblem-wrapper::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 1.5px dashed var(--navy-subtle);
+}
+
+.emblem-svg {
+  width: 36px;
+  height: 36px;
+  color: #ffffff;
+}
+
+/* Status Pill */
+.verification-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--bg-badge-success);
+  color: var(--emerald-dark);
+  border: 1px solid #a7f3d0;
+  padding: 0.35rem 0.95rem;
+  border-radius: var(--radius-full);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--emerald-success);
+  box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.2);
+  animation: pulse-dot 2s infinite ease-in-out;
+}
+
+@keyframes pulse-dot {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 0.8;
+  }
+}
+
+/* Student Name & Domain Headline */
+.label-eyebrow {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.35rem;
+}
+
+.student-name {
+  font-size: 2.15rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--navy-primary);
+  line-height: 1.15;
+  margin-bottom: 0.45rem;
+  word-break: break-word;
+}
+
+.domain-title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--navy-accent);
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+}
+
+/* Main Certificate Details Card */
+.details-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+.card-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.1rem 1.5rem;
+  background-color: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-light);
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.card-heading {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--navy-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.id-badge {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  background-color: #ffffff;
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-light);
+  letter-spacing: 0.02em;
+}
+
+/* Details Grid */
+.details-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  padding: 0.5rem 0;
+}
+
+@media (min-width: 600px) {
+  .details-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.detail-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.9rem;
+  padding: 1.1rem 1.5rem;
+  border-bottom: 1px solid var(--border-subtle);
+  transition: background-color 0.15s ease;
+}
+
+@media (min-width: 600px) {
+  .detail-item:nth-child(odd) {
+    border-right: 1px solid var(--border-subtle);
+  }
+  .detail-item:nth-last-child(1),
+  .detail-item:nth-last-child(2) {
+    border-bottom: none;
+  }
+}
+
+.detail-item:last-child {
+  border-bottom: none;
+}
+
+.detail-icon-box {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-md);
+  background-color: var(--bg-badge-navy);
+  color: var(--navy-medium);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.detail-icon-box svg {
+  width: 20px;
+  height: 20px;
+}
+
+.detail-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.detail-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.15rem;
+}
+
+.detail-value {
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+.detail-value.highlight-name {
+  color: var(--navy-primary);
+  font-weight: 700;
+}
+
+.detail-value.status-highlight {
+  color: var(--emerald-dark);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.detail-value.status-highlight::before {
+  content: "";
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  background-color: var(--emerald-success);
+  border-radius: 50%;
+}
+
+/* Security Notice / Scan Indicator Banner */
+.security-box {
+  background: #fbfcfe;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 1.15rem 1.35rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.95rem;
+}
+
+.security-icon-box {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background-color: #f0fdf4;
+  color: var(--emerald-success);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 1px solid #bbf7d0;
+}
+
+.security-text h4 {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--navy-primary);
+  margin-bottom: 0.2rem;
+}
+
+.security-text p {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.45;
+}
+
+/* Footer Section */
+.record-footer {
+  margin-top: auto;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-light);
+  text-align: center;
+}
+
+.disclaimer-card {
+  background-color: #fafafa;
+  border: 1px dashed var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.disclaimer-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  margin-bottom: 0.35rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+}
+
+.disclaimer-text {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.footer-meta {
+  font-size: 0.75rem;
+  color: var(--text-light);
+  line-height: 1.5;
+}
+
+.footer-meta a {
+  color: var(--navy-accent);
+  text-decoration: none;
+}
+
+.footer-meta a:hover {
+  text-decoration: underline;
+}
+
+/* Utility to toggle sections */
+.hidden {
+  display: none !important;
+}
+
+</style>
+</head>
+<body>
+
+  <!-- Top Navy-Blue Accent Stripe -->
+  <div class="accent-stripe" aria-hidden="true"></div>
+
+  <!-- Main Navigation Bar -->
+  <nav class="site-nav" aria-label="Main Navigation">
+    <div class="nav-container">
+      
+      <!-- Brand Logo -->
+      <a href="https://www.codsoft.in/" class="brand-link" target="_blank" rel="noopener noreferrer">
+        <svg class="brand-logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          <path d="m9 12 2 2 4-4"/>
+        </svg>
+        <span>COD<span class="brand-name-highlight">SOFT</span></span>
+      </a>
+
+      <!-- Only About Us Button -->
+      <div class="nav-right-area">
+        <a href="https://www.codsoft.in/about-us" class="btn-about-nav" target="_blank" rel="noopener noreferrer">
+          <span>About Us</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+            <polyline points="15 3 21 3 21 9"/>
+            <line x1="10" y1="14" x2="21" y2="3"/>
+          </svg>
+        </a>
+      </div>
+
+    </div>
+  </nav>
+
+  <!-- Main Content Container -->
+  <main class="page-container">
+
+    <!-- ==============================================================
+         SECTION 1: HOME VERIFICATION SEARCH VIEW (Shown on Root URL)
+         ============================================================== -->
+    <section id="homeView" class="home-hero-section" aria-label="Certificate Verification Form">
+      
+      <!-- Eyebrow Badge -->
+      <div class="secure-badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          <path d="m9 12 2 2 4-4"/>
+        </svg>
+        <span>Secure Validation</span>
+      </div>
+
+      <!-- Main Headline -->
+      <h1 class="home-hero-title">Verify Your Internship Certificate</h1>
+
+      <!-- Subtitle -->
+      <p class="home-hero-desc">
+        Verify internship certificates using a unique certificate ID. Ensure authenticity and validate student achievements instantly with our secure portal.
+      </p>
+
+      <!-- Verification Input Box -->
+      <div class="verify-form-card">
+        <form id="verifySearchForm" onsubmit="event.preventDefault(); submitVerificationSearch();">
+          <div class="verify-input-row">
+            <div class="search-input-wrapper">
+              <svg class="search-icon-inside" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="8"/>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+              </svg>
+              <input 
+                type="text" 
+                id="searchCertInput" 
+                class="verify-input-field" 
+                placeholder="Enter Certificate ID"
+                autocomplete="off"
+                required
+              />
+            </div>
+            <button type="submit" class="btn-verify-submit">
+              <span>Verify Certificate</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </button>
+          </div>
+        </form>
+
+        <!-- Alert Box for not found -->
+        <div id="searchErrorAlert" class="search-alert error"></div>
+      </div>
+
+      <!-- 4 Trust Feature Cards -->
+      <div class="trust-features-grid">
+        
+        <!-- Feature 1 -->
+        <div class="trust-feature-card">
+          <div class="trust-icon-box" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <path d="m9 12 2 2 4-4"/>
+            </svg>
+          </div>
+          <div class="trust-card-title">Secure Verification System</div>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="trust-feature-card">
+          <div class="trust-icon-box" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="18" height="14" x="3" y="5" rx="2"/>
+              <line x1="7" y1="15" x2="7.01" y2="15"/>
+              <line x1="11" y1="15" x2="17" y2="15"/>
+            </svg>
+          </div>
+          <div class="trust-card-title">Unique Certificate ID</div>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="trust-feature-card">
+          <div class="trust-icon-box" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+            </svg>
+          </div>
+          <div class="trust-card-title">Instant Validation</div>
+        </div>
+
+        <!-- Feature 4 -->
+        <div class="trust-feature-card">
+          <div class="trust-icon-box" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+          </div>
+          <div class="trust-card-title">Trusted by Recruiters</div>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ==============================================================
+         SECTION 2: CERTIFICATE RESULT VIEW (Shown on Direct URL / QR Scan)
+         ============================================================== -->
+    <section id="resultView" class="certificate-result-section hidden" aria-label="Certificate Result View">
+
+      <!-- Navigation back to search -->
+      <div class="back-to-search-bar">
+        <button type="button" class="btn-back" onclick="switchToHomeView()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+          <span>Verify Another Certificate</span>
+        </button>
+        <div class="record-type-pill" style="font-size: 0.75rem;">
+          <span>Digital Verification Record</span>
+        </div>
+      </div>
+
+      <!-- Hero Status Card -->
+      <div class="hero-status-card" aria-label="Certificate Status Summary">
+        <!-- Certificate Icon Emblem -->
+        <div class="emblem-wrapper" aria-hidden="true">
+          <svg class="emblem-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="8" r="6"/>
+            <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/>
+            <path d="m9 8 2 2 4-4"/>
+          </svg>
+        </div>
+
+        <!-- Record Status Indicator -->
+        <div>
+          <div class="verification-badge">
+            <span class="status-dot" aria-hidden="true"></span>
+            <span id="badgeStatus">Record Issued</span>
+          </div>
+        </div>
+
+        <!-- Prominent Student Name -->
+        <div class="label-eyebrow">Awarded To</div>
+        <h2 class="student-name" id="heroStudentName">Mansi Suryawanshi</h2>
+        <p class="domain-title" id="heroDomain">Java Programming Internship</p>
+      </div>
+
+      <!-- Certificate Details Card -->
+      <div class="details-card" aria-label="Certificate Details">
+        <div class="card-topbar">
+          <div class="card-heading">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="16" y1="13" x2="8" y2="13"/>
+              <line x1="16" y1="17" x2="8" y2="17"/>
+              <polyline points="10 9 9 9 8 9"/>
+            </svg>
+            <span>Certificate Information</span>
+          </div>
+          <div class="id-badge" title="Unique Certificate Record ID">
+            <span>ID: </span><strong id="certId">CS/2026/JP/84920</strong>
+          </div>
+        </div>
+
+        <!-- 2-Column Responsive Details Grid -->
+        <div class="details-grid">
+          
+          <!-- Student Name -->
+          <div class="detail-item">
+            <div class="detail-icon-box" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+              </svg>
+            </div>
+            <div class="detail-content">
+              <div class="detail-label">Candidate Name</div>
+              <div class="detail-value highlight-name" id="detailStudentName">Mansi Suryawanshi</div>
+            </div>
+          </div>
+
+          <!-- Domain -->
+          <div class="detail-item">
+            <div class="detail-icon-box" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="16 18 22 12 16 6"/>
+                <polyline points="8 6 2 12 8 18"/>
+              </svg>
+            </div>
+            <div class="detail-content">
+              <div class="detail-label">Internship Domain</div>
+              <div class="detail-value" id="detailDomain">Java Programming Internship</div>
+            </div>
+          </div>
+
+          <!-- Duration -->
+          <div class="detail-item">
+            <div class="detail-icon-box" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12 6 12 12 16 14"/>
+              </svg>
+            </div>
+            <div class="detail-content">
+              <div class="detail-label">Duration</div>
+              <div class="detail-value" id="detailDuration">4 weeks</div>
+            </div>
+          </div>
+
+          <!-- Status -->
+          <div class="detail-item">
+            <div class="detail-icon-box" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                <polyline points="22 4 12 14.01 9 11.01"/>
+              </svg>
+            </div>
+            <div class="detail-content">
+              <div class="detail-label">Record Status</div>
+              <div class="detail-value status-highlight" id="detailStatus">Completed</div>
+            </div>
+          </div>
+
+          <!-- Starting Date -->
+          <div class="detail-item">
+            <div class="detail-icon-box" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                <line x1="16" y1="2" x2="16" y2="6"/>
+                <line x1="8" y1="2" x2="8" y2="6"/>
+                <line x1="3" y1="10" x2="21" y2="10"/>
+              </svg>
+            </div>
+            <div class="detail-content">
+              <div class="detail-label">Starting Date</div>
+              <div class="detail-value" id="detailStartDate">25 January 2026</div>
+            </div>
+          </div>
+
+          <!-- Award Date -->
+          <div class="detail-item">
+            <div class="detail-icon-box" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M8 2v4"/>
+                <path d="M16 2v4"/>
+                <rect width="18" height="18" x="3" y="4" rx="2"/>
+                <path d="M3 10h18"/>
+                <path d="m9 16 2 2 4-4"/>
+              </svg>
+            </div>
+            <div class="detail-content">
+              <div class="detail-label">Award Date</div>
+              <div class="detail-value" id="detailAwardDate">25 February 2026</div>
+            </div>
+          </div>
+
+          <!-- Program Issuer -->
+          <div class="detail-item">
+            <div class="detail-icon-box" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                <polyline points="9 22 9 12 15 12 15 22"/>
+              </svg>
+            </div>
+            <div class="detail-content">
+              <div class="detail-label">Issuing Body</div>
+              <div class="detail-value" id="detailIssuer">CodSoft (Virtual Internship Program)</div>
+            </div>
+          </div>
+
+          <!-- Access Mode -->
+          <div class="detail-item">
+            <div class="detail-icon-box" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect width="5" height="5" x="3" y="3" rx="1"/>
+                <rect width="5" height="5" x="16" y="3" rx="1"/>
+                <rect width="5" height="5" x="3" y="16" rx="1"/>
+                <path d="M21 16h-3a2 2 0 0 0-2 2v3"/>
+                <path d="M21 21v.01"/>
+                <path d="M12 7v3a2 2 0 0 1-2 2H7"/>
+                <path d="M3 12h.01"/>
+                <path d="M12 3h.01"/>
+                <path d="M12 16v.01"/>
+                <path d="M16 12h1"/>
+                <path d="M21 12v.01"/>
+                <path d="M12 21v-1"/>
+              </svg>
+            </div>
+            <div class="detail-content">
+              <div class="detail-label">Verification Medium</div>
+              <div class="detail-value">Direct QR Code Record Access</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Scan & Record Notice Box -->
+      <div class="security-box" role="region" aria-label="QR Direct Scan Notification">
+        <div class="security-icon-box" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+        </div>
+        <div class="security-text">
+          <h4>Direct Certificate Record Resolved</h4>
+          <p>This certificate record was verified and retrieved instantly. Authenticity details and completion milestones are confirmed below.</p>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Small Footer with Independent Record Disclaimer -->
+    <footer class="record-footer">
+      <div class="disclaimer-card">
+        <div class="disclaimer-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="12"/>
+            <line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+          <span>Independent Record Disclaimer</span>
+        </div>
+        <p class="disclaimer-text">
+          This webpage is an independent certificate record hosted for presentation and verification reference. It is not an official verification service operated by CODSOFT. Authenticity of certificates must be verified directly through CODSOFT's official portal at <a href="https://www.codsoft.in" target="_blank" rel="noopener noreferrer">codsoft.in</a>.
+        </p>
+      </div>
+
+      <p class="footer-meta">
+        Certificate Verification Portal &bull; <span id="footerCertWrap" style="display: none;">Record ID: <strong id="footerCertId"></strong> &bull; </span>&copy; <span id="currentYear">2026</span>
+      </p>
+    </footer>
+
+  </main>
+
+  <!-- JavaScript Data, Router & Renderer -->
+  <script>
+// Strictly Lock Tab Title
+document.title = "Certificate Verification | CodSoft";
+
+/**
+ * ===================================================================
+ * Certificate Record System - Core Data Store, Router & Dynamic Renderer
+ * Connected to MongoDB Atlas: atlas-almond-magnet.oijqqzc.mongodb.net
+ * ===================================================================
+ */
+
+// Default Seed Certificates (Stored directly in codebase as backup)
+const DEFAULT_CERTIFICATES = [
+  {
+    id: "CS/2026/JP/84920",
+    certificateId: "CS/2026/JP/84920",
+    studentName: "Mansi Suryawanshi",
+    domain: "Java Programming Internship",
+    duration: "4 weeks",
+    startingDate: "25 January 2026",
+    awardDate: "25 February 2026",
+    credentialType: "Internship Completion Record",
+    recordStatus: "Completed",
+    issuerOrganization: "CodSoft (Virtual Internship Program)",
+    verificationStatus: "Record Issued",
+    recordReference: "IND-REC-202602-0941"
+  },
+  {
+    id: "CS/2026/JP/32816",
+    certificateId: "CS/2026/JP/32816",
+    studentName: "Mansi Suryawanshi",
+    domain: "Java Programming Internship",
+    duration: "4 weeks",
+    startingDate: "25 January 2026",
+    awardDate: "25 February 2026",
+    credentialType: "Internship Completion Record",
+    recordStatus: "Completed",
+    issuerOrganization: "CodSoft (Virtual Internship Program)",
+    verificationStatus: "Record Issued",
+    recordReference: "IND-REC-202602-32816"
+  },
+  {
+    id: "CS/2026/VIP/76548",
+    certificateId: "CS/2026/VIP/76548",
+    studentName: "Mansi Suryawanshi",
+    domain: "Virtual Internship Program",
+    duration: "4 weeks",
+    startingDate: "25 January 2026",
+    awardDate: "25 February 2026",
+    credentialType: "Internship Completion Record",
+    recordStatus: "Completed",
+    issuerOrganization: "CodSoft (Virtual Internship Program)",
+    verificationStatus: "Record Issued",
+    recordReference: "IND-REC-202602-76548"
+  }
+];
+
+const certificateData = DEFAULT_CERTIFICATES[0];
+const STORAGE_KEY = "codsoft_certificates_store_v1";
+
+/**
+ * Certificate Database Manager (MongoDB Atlas API + LocalStorage Cache)
+ */
+const CertificateStore = {
+  getAll() {
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          const merged = [...parsed];
+          DEFAULT_CERTIFICATES.forEach(def => {
+            const defId = def.id || def.certificateId;
+            if (!merged.some(m => (m.id || m.certificateId) === defId)) {
+              merged.push(def);
+            }
+          });
+          return merged;
+        }
+      }
+    } catch (e) {
+      console.warn("Could not read from localStorage, using default seed records.", e);
+    }
+    return JSON.parse(JSON.stringify(DEFAULT_CERTIFICATES));
+  },
+
+  saveAll(certificates) {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(certificates));
+      return true;
+    } catch (e) {
+      console.error("Failed to save certificates to localStorage:", e);
+      return false;
+    }
+  },
+
+  getById(rawCode) {
+    if (!rawCode) return null;
+    const all = this.getAll();
+    const cleanRaw = rawCode.trim().toLowerCase();
+    const alphaNumRaw = cleanRaw.replace(/[^a-z0-9]/g, "");
+
+    // 1. Exact match on ID or certificateId
+    let match = all.find(c => {
+      const id1 = ((c.id || "")).trim().toLowerCase();
+      const id2 = ((c.certificateId || "")).trim().toLowerCase();
+      return id1 === cleanRaw || id2 === cleanRaw;
+    });
+    if (match) return match;
+
+    // 2. Alphanumeric match (ignores hyphens, slashes, spaces)
+    match = all.find(c => {
+      const idClean = ((c.id || c.certificateId) || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+      return idClean === alphaNumRaw;
+    });
+    if (match) return match;
+
+    // 3. Number/Suffix Match (e.g. user enters "32816" -> matches "CS/2026/JP/32816")
+    if (alphaNumRaw.length >= 3) {
+      match = all.find(c => {
+        const idClean = ((c.id || c.certificateId) || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+        return idClean.endsWith(alphaNumRaw) || idClean.includes(alphaNumRaw);
+      });
+      if (match) return match;
+    }
+
+    // 4. Candidate Name Match (e.g. "mansi" or "mansi-suryawanshi")
+    match = all.find(c => {
+      const nameClean = (c.studentName || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+      return nameClean.includes(alphaNumRaw) || alphaNumRaw.includes(nameClean);
+    });
+    if (match) return match;
+
+    return null;
+  },
+
+  save(cert) {
+    const all = this.getAll();
+    const certId = cert.id || cert.certificateId;
+    const index = all.findIndex(c => (c.id || c.certificateId) === certId);
+    if (index >= 0) {
+      all[index] = { ...all[index], ...cert, id: certId, certificateId: certId };
+    } else {
+      all.unshift({ ...cert, id: certId, certificateId: certId });
+    }
+    this.saveAll(all);
+    return cert;
+  },
+
+  delete(id) {
+    let all = this.getAll();
+    all = all.filter(c => (c.id || c.certificateId) !== id);
+    if (all.length === 0) {
+      all = JSON.parse(JSON.stringify(DEFAULT_CERTIFICATES));
+    }
+    this.saveAll(all);
+    return all;
+  },
+
+  // Asynchronous MongoDB Atlas Methods
+  async fetchFromMongo(id) {
+    try {
+      const url = id ? `/api/certificates?id=${encodeURIComponent(id)}` : '/api/certificates';
+      const res = await fetch(url);
+      if (!res.ok) return null;
+      const data = await res.json();
+      if (data.success) {
+        if (id && data.certificate) {
+          this.save(data.certificate);
+          return data.certificate;
+        } else if (data.certificates) {
+          this.saveAll(data.certificates);
+          return data.certificates;
+        }
+      }
+    } catch (e) {}
+    return null;
+  },
+
+  async saveToMongo(cert) {
+    this.save(cert); // Save locally first for instant UI response
+    try {
+      const res = await fetch('/api/certificates', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(cert)
+      });
+      if (!res.ok) return { success: false, status: res.status };
+      return await res.json();
+    } catch (e) {
+      console.warn("Could not sync to MongoDB:", e);
+      return { success: false, offline: true };
+    }
+  },
+
+  async deleteFromMongo(id) {
+    this.delete(id);
+    try {
+      await fetch(`/api/certificates?id=${encodeURIComponent(id)}`, { method: 'DELETE' });
+    } catch (e) {}
+  },
+
+  resetToDefault() {
+    this.saveAll(DEFAULT_CERTIFICATES);
+    return DEFAULT_CERTIFICATES;
+  }
+};
+
+/**
+ * Universal URL Data Encoding / Decoding
+ */
+const CertificateURL = {
+  encodeData(cert) {
+    try {
+      const json = JSON.stringify(cert);
+      return btoa(encodeURIComponent(json));
+    } catch (e) {
+      return "";
+    }
+  },
+
+  decodeData(encoded) {
+    try {
+      const json = decodeURIComponent(atob(encoded));
+      return JSON.parse(json);
+    } catch (e) {
+      return null;
+    }
+  },
+
+  buildVerificationUrl(cert, customBaseUrl) {
+    let base = customBaseUrl ? customBaseUrl.trim() : "";
+    if (!base) {
+      const loc = window.location;
+      base = `${loc.protocol}//${loc.host}`;
+    }
+
+    base = base.replace(/\/+$/, "");
+    const certId = cert.id || cert.certificateId;
+    return `${base}/${certId}`;
+  }
+};
+
+/**
+ * Extract certificate code / ID from URL
+ */
+function extractCodeFromUrl() {
+  const urlParams = new URLSearchParams(window.location.search);
+
+  // 1. Query parameters (?id=... or ?code=...)
+  if (urlParams.get("id")) {
+    try {
+      return decodeURIComponent(urlParams.get("id")).trim();
+    } catch (e) {
+      return urlParams.get("id").trim();
+    }
+  }
+  if (urlParams.get("code")) {
+    try {
+      return decodeURIComponent(urlParams.get("code")).trim();
+    } catch (e) {
+      return urlParams.get("code").trim();
+    }
+  }
+
+  // 2. Hash routing (#32816 or #/CS/2026/JP/32816)
+  if (window.location.hash) {
+    const rawHash = window.location.hash.replace(/^#\/?/, "").trim();
+    if (rawHash && rawHash !== "index.html") {
+      try {
+        return decodeURIComponent(rawHash);
+      } catch (e) {
+        return rawHash;
+      }
+    }
+  }
+
+  // 3. Pathname after slash (/CS/2026/JP/32816, /84920, etc.)
+  let path = window.location.pathname;
+  try {
+    path = decodeURIComponent(path);
+  } catch (e) {}
+
+  path = path.replace(/^\/+|\/+$/g, "").trim();
+
+  const ignored = [
+    "",
+    "index.html",
+    "admin.html",
+    "admin",
+    "qr-generator.html",
+    "qr-generator",
+    "favicon.ico",
+    "generate_qr.py",
+    "readme.md",
+    "vercel.json"
+  ];
+
+  if (ignored.includes(path.toLowerCase()) || path.startsWith("css/") || path.startsWith("js/")) {
+    return null;
+  }
+
+  return path;
+}
+
+/**
+ * Render Certificate Data into DOM elements
+ */
+function displayCertificate(data) {
+  if (!data) return;
+
+  const certId = data.id || data.certificateId || "CS/2026/JP/84920";
+
+  // Strictly Lock Tab Title
+  document.title = "Certificate Verification | CodSoft";
+
+  const safeSetText = (id, text) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = text || "—";
+  };
+
+  // Student & Program Highlights
+  safeSetText("heroStudentName", data.studentName);
+  safeSetText("heroDomain", data.domain);
+  safeSetText("badgeStatus", data.verificationStatus || "Record Issued");
+
+  // Detailed Grid
+  safeSetText("certId", certId);
+  safeSetText("detailStudentName", data.studentName);
+  safeSetText("detailDomain", data.domain);
+  safeSetText("detailDuration", data.duration);
+  safeSetText("detailStartDate", data.startingDate);
+  safeSetText("detailAwardDate", data.awardDate);
+  safeSetText("detailStatus", data.recordStatus || "Completed");
+  safeSetText("detailIssuer", data.issuerOrganization || "CodSoft (Virtual Internship Program)");
+
+  // Footer metadata
+  safeSetText("footerCertId", certId);
+  const footerWrap = document.getElementById("footerCertWrap");
+  if (footerWrap) footerWrap.style.display = "inline";
+
+  // Dynamic Year
+  const yearEl = document.getElementById("currentYear");
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+  // Switch View Visibility
+  const homeView = document.getElementById("homeView");
+  const resultView = document.getElementById("resultView");
+  if (homeView && resultView) {
+    homeView.classList.add("hidden");
+    resultView.classList.remove("hidden");
+  }
+}
+
+/**
+ * Switch back to Home Verification Search View
+ */
+function switchToHomeView() {
+  const homeView = document.getElementById("homeView");
+  const resultView = document.getElementById("resultView");
+  const errorAlert = document.getElementById("searchErrorAlert");
+  const searchInput = document.getElementById("searchCertInput");
+
+  if (homeView && resultView) {
+    resultView.classList.add("hidden");
+    homeView.classList.remove("hidden");
+  }
+
+  const footerWrap = document.getElementById("footerCertWrap");
+  if (footerWrap) footerWrap.style.display = "none";
+
+  if (errorAlert) {
+    errorAlert.style.display = "none";
+    errorAlert.textContent = "";
+  }
+
+  if (searchInput) {
+    searchInput.value = "";
+    searchInput.focus();
+  }
+
+  document.title = "Certificate Verification | CodSoft";
+
+  // Reset URL to root cleanly without reload
+  if (window.history && window.history.pushState) {
+    window.history.pushState({}, "", "/");
+  }
+}
+
+/**
+ * Search and verify certificate from home input (checks MongoDB Atlas first)
+ */
+async function submitVerificationSearch() {
+  const inputEl = document.getElementById("searchCertInput");
+  const errorAlert = document.getElementById("searchErrorAlert");
+  if (!inputEl) return;
+
+  const rawCode = inputEl.value.trim();
+  if (!rawCode) return;
+
+  // 1. Try querying MongoDB Atlas
+  let found = await CertificateStore.fetchFromMongo(rawCode);
+
+  // 2. Fall back to local store
+  if (!found) {
+    found = CertificateStore.getById(rawCode);
+  }
+
+  if (found) {
+    if (errorAlert) errorAlert.style.display = "none";
+    displayCertificate(found);
+
+    if (window.history && window.history.pushState) {
+      window.history.pushState({}, "", `/${found.id}`);
+    }
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  } else {
+    if (errorAlert) {
+      const safeCode = rawCode.replace(/[<>&"']/g, "");
+      errorAlert.innerHTML = `No certificate record found for "<strong>${safeCode}</strong>". Please check the Certificate ID printed on your document and try again.`;
+      errorAlert.style.display = "block";
+    }
+  }
+}
+
+/**
+ * Initialize View Routing on Page Load
+ */
+async function initViewRouting() {
+  // Check if self-contained data payload is in URL (?data=...)
+  const urlParams = new URLSearchParams(window.location.search);
+  const dataParam = urlParams.get("data");
+  if (dataParam) {
+    const decoded = CertificateURL.decodeData(dataParam);
+    if (decoded && decoded.studentName) {
+      CertificateStore.save(decoded);
+      displayCertificate(decoded);
+      return;
+    }
+  }
+
+  // Check code extracted from pathname (/CS/2026/JP/32816, /84920), query or hash
+  const extractedCode = extractCodeFromUrl();
+  if (extractedCode) {
+    // 1. Instant cache render
+    let found = CertificateStore.getById(extractedCode);
+    if (found) {
+      displayCertificate(found);
+    }
+
+    // 2. Fetch fresh live data from MongoDB Atlas
+    const mongoCert = await CertificateStore.fetchFromMongo(extractedCode);
+    if (mongoCert) {
+      displayCertificate(mongoCert);
+      return;
+    }
+
+    if (found) return;
+
+    // If not found in MongoDB Atlas and not in cache, show Not Found state
+    const homeView = document.getElementById("homeView");
+    const resultView = document.getElementById("resultView");
+    const errorAlert = document.getElementById("searchErrorAlert");
+    const searchInput = document.getElementById("searchCertInput");
+    if (homeView && resultView) {
+      homeView.classList.remove("hidden");
+      resultView.classList.add("hidden");
+    }
+    if (searchInput) searchInput.value = extractedCode;
+    if (errorAlert) {
+      const safeCode = extractedCode.replace(/[<>&"']/g, "");
+      errorAlert.innerHTML = `No certificate record found in MongoDB Atlas for "<strong>${safeCode}</strong>". Please check the Certificate ID and try again.`;
+      errorAlert.style.display = "block";
+    }
+    return;
+  }
+
+  // 3. If at root without any code, show Home Verification View
+  const homeView = document.getElementById("homeView");
+  const resultView = document.getElementById("resultView");
+  const footerWrap = document.getElementById("footerCertWrap");
+  if (footerWrap) footerWrap.style.display = "none";
+  if (homeView && resultView) {
+    homeView.classList.remove("hidden");
+    resultView.classList.add("hidden");
+  }
+}
+
+// Auto-run when DOM is ready
+if (typeof window !== "undefined") {
+  window.addEventListener("DOMContentLoaded", () => {
+    if (document.getElementById("homeView")) {
+      initViewRouting();
+    }
+  });
+
+  window.addEventListener("hashchange", () => {
+    if (document.getElementById("homeView")) {
+      initViewRouting();
+    }
+  });
+}
+
+</script>
+</body>
+</html>

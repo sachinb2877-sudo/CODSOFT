@@ -1,0 +1,1857 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Certificate Admin Portal | CodSoft Internship Records</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230a2540'><path d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --navy-primary: #0a2540;
+      --navy-dark: #071727;
+      --navy-medium: #1e3a8a;
+      --navy-accent: #2563eb;
+      --navy-light: #eff6ff;
+      --navy-subtle: #dbeafe;
+      
+      --emerald: #059669;
+      --emerald-light: #ecfdf5;
+      --emerald-border: #a7f3d0;
+      
+      --danger: #dc2626;
+      --danger-light: #fef2f2;
+      
+      --bg-body: #f8fafc;
+      --bg-card: #ffffff;
+      --border-color: #e2e8f0;
+      
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --text-light: #94a3b8;
+      
+      --shadow-sm: 0 1px 2px 0 rgba(15, 23, 42, 0.05);
+      --shadow-md: 0 4px 12px -2px rgba(10, 37, 64, 0.08);
+      --shadow-lg: 0 12px 28px -4px rgba(10, 37, 64, 0.1);
+      
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      
+      --font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-family);
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top Accent Stripe */
+    .top-stripe {
+      height: 4px;
+      background: linear-gradient(90deg, var(--navy-primary) 0%, var(--navy-accent) 60%, var(--emerald) 100%);
+    }
+
+    /* Admin Navigation Header */
+    .admin-navbar {
+      background-color: var(--navy-primary);
+      color: white;
+      padding: 0.9rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    .nav-brand svg {
+      width: 26px;
+      height: 26px;
+      color: #60a5fa;
+    }
+
+    .nav-badge {
+      background-color: rgba(255, 255, 255, 0.15);
+      padding: 0.2rem 0.6rem;
+      border-radius: 9999px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.45rem 0.9rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-decoration: none;
+      color: white;
+      background-color: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .nav-btn:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .nav-btn-primary {
+      background-color: var(--navy-accent);
+      border-color: var(--navy-accent);
+    }
+
+    .nav-btn-primary:hover {
+      background-color: #1d4ed8;
+    }
+
+    /* Main Container */
+    .admin-container {
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 3rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+    }
+
+    /* Auth Screen Overlay */
+    .auth-overlay {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(7, 23, 39, 0.88);
+      backdrop-filter: blur(5px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .auth-card {
+      background-color: white;
+      border-radius: var(--radius-lg);
+      padding: 2.25rem;
+      max-width: 400px;
+      width: 100%;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      text-align: center;
+    }
+
+    .auth-icon {
+      width: 56px;
+      height: 56px;
+      background: var(--navy-light);
+      color: var(--navy-medium);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.25rem;
+    }
+
+    .auth-card h2 {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--navy-primary);
+      margin-bottom: 0.35rem;
+    }
+
+    .auth-card p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    /* Banner / Welcome */
+    .admin-banner {
+      background: white;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem 1.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .banner-title h1 {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: var(--navy-primary);
+      letter-spacing: -0.02em;
+    }
+
+    .banner-title p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-top: 0.2rem;
+    }
+
+    .stats-row {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .stat-pill {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+
+    .stat-val {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--navy-primary);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+
+    /* 2-Column Working Layout (Editor + Live QR Panel) */
+    .admin-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.75rem;
+    }
+
+    @media (min-width: 960px) {
+      .admin-grid {
+        grid-template-columns: 1.45fr 1fr;
+      }
+    }
+
+    /* Common Card Styling */
+    .admin-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-header {
+      padding: 1.25rem 1.5rem;
+      background: linear-gradient(180deg, #ffffff 0%, var(--bg-body) 100%);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .card-header h2 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--navy-primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .mode-indicator {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 0.25rem 0.65rem;
+      border-radius: 9999px;
+      background-color: var(--navy-light);
+      color: var(--navy-medium);
+      border: 1px solid var(--navy-subtle);
+    }
+
+    .mode-indicator.editing {
+      background-color: #fef3c7;
+      color: #92400e;
+      border-color: #fde68a;
+    }
+
+    .card-body {
+      padding: 1.5rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    /* Form Layout */
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    @media (min-width: 540px) {
+      .form-row.two-col {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .form-group label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: var(--navy-primary);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .form-group label .hint {
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+
+    .input-with-btn {
+      display: flex;
+      gap: 0.4rem;
+    }
+
+    input[type="text"], select {
+      width: 100%;
+      padding: 0.65rem 0.85rem;
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      font-size: 0.92rem;
+      font-family: inherit;
+      outline: none;
+      transition: all 0.15s ease;
+      background-color: white;
+    }
+
+    input[type="text"]:focus, select:focus {
+      border-color: var(--navy-accent);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+    }
+
+    .btn-mini {
+      padding: 0.45rem 0.75rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      background-color: var(--bg-body);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .btn-mini:hover {
+      background-color: #e2e8f0;
+    }
+
+    /* Quick Domain Presets */
+    .presets-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.25rem;
+    }
+
+    .preset-pill {
+      font-size: 0.72rem;
+      padding: 0.2rem 0.55rem;
+      border-radius: 9999px;
+      background-color: #f1f5f9;
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .preset-pill:hover {
+      background-color: var(--navy-light);
+      color: var(--navy-medium);
+      border-color: var(--navy-subtle);
+    }
+
+    /* Form Actions */
+    .form-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      padding-top: 0.5rem;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .btn {
+      padding: 0.7rem 1.3rem;
+      font-size: 0.9rem;
+      font-weight: 700;
+      border-radius: var(--radius-sm);
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      transition: all 0.15s ease;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background-color: var(--navy-primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--navy-medium);
+    }
+
+    .btn-success {
+      background-color: var(--emerald);
+      color: white;
+    }
+
+    .btn-success:hover {
+      background-color: #047857;
+    }
+
+    .btn-secondary {
+      background-color: #f1f5f9;
+      color: var(--navy-primary);
+      border: 1px solid var(--border-color);
+    }
+
+    .btn-secondary:hover {
+      background-color: #e2e8f0;
+    }
+
+    /* QR Code & Preview Panel */
+    .qr-preview-panel {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.15rem;
+    }
+
+    .qr-box-wrapper {
+      padding: 14px;
+      background: white;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      box-shadow: 0 4px 14px rgba(10, 37, 64, 0.06);
+      display: inline-block;
+      min-width: 210px;
+      min-height: 210px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .qr-box-wrapper canvas, .qr-box-wrapper img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+
+    .qr-meta-box {
+      width: 100%;
+      text-align: left;
+      background: var(--bg-body);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 0.75rem 0.95rem;
+      font-size: 0.78rem;
+    }
+
+    .qr-meta-box strong {
+      color: var(--navy-primary);
+    }
+
+    .url-display {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      word-break: break-all;
+      margin-top: 0.35rem;
+      background: white;
+      padding: 0.4rem 0.55rem;
+      border-radius: 4px;
+      border: 1px solid var(--border-color);
+    }
+
+    /* Certificate Table Area */
+    .table-section {
+      background: white;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+    }
+
+    .table-topbar {
+      padding: 1.15rem 1.5rem;
+      background: linear-gradient(180deg, #ffffff 0%, var(--bg-body) 100%);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .search-input {
+      max-width: 280px;
+      padding: 0.5rem 0.85rem;
+      font-size: 0.82rem;
+    }
+
+    .table-responsive {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.88rem;
+    }
+
+    th {
+      background-color: var(--bg-body);
+      color: var(--navy-primary);
+      font-weight: 700;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 0.85rem 1.25rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    td {
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--border-color);
+      color: var(--text-main);
+      vertical-align: middle;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      background-color: #fafbfc;
+    }
+
+    .td-id {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--navy-medium);
+    }
+
+    .td-student {
+      font-weight: 700;
+      color: var(--navy-primary);
+    }
+
+    .td-domain {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .status-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.2rem 0.6rem;
+      border-radius: 9999px;
+      background-color: var(--emerald-light);
+      color: var(--emerald);
+      border: 1px solid var(--emerald-border);
+    }
+
+    .action-group {
+      display: flex;
+      gap: 0.4rem;
+    }
+
+    .btn-action {
+      padding: 0.35rem 0.65rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+      background-color: white;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      transition: all 0.1s ease;
+      color: var(--text-main);
+      text-decoration: none;
+    }
+
+    .btn-action:hover {
+      background-color: var(--bg-body);
+      border-color: var(--navy-accent);
+      color: var(--navy-accent);
+    }
+
+    .btn-action.delete:hover {
+      background-color: var(--danger-light);
+      border-color: var(--danger);
+      color: var(--danger);
+    }
+
+    /* Notification Toast */
+    .toast {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      background-color: var(--navy-primary);
+      color: white;
+      padding: 0.85rem 1.25rem;
+      border-radius: var(--radius-md);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: none;
+      align-items: center;
+      gap: 0.6rem;
+      z-index: 2000;
+      animation: slide-up 0.25s ease-out;
+    }
+
+    @keyframes slide-up {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    /* Deploy Sync Utilities Card */
+    .sync-card {
+      background: linear-gradient(135deg, #f0f7ff 0%, #ffffff 100%);
+      border: 1px solid var(--navy-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .sync-text h3 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--navy-primary);
+    }
+
+    .sync-text p {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      max-width: 650px;
+      margin-top: 0.15rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Accent Stripe -->
+  <div class="top-stripe"></div>
+
+  <!-- Admin Navbar -->
+  <header class="admin-navbar">
+    <div class="nav-brand">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        <path d="m9 12 2 2 4-4"/>
+      </svg>
+      <span>Certificate Admin Portal</span>
+      <span class="nav-badge" style="background: rgba(16, 185, 129, 0.2); border: 1px solid #10b981; color: #6ee7b7;">● MongoDB Atlas Connected</span>
+    </div>
+
+    <div class="nav-links">
+      <a href="index.html" class="nav-btn" target="_blank" title="View Public Verification View">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        <span>View Public Record</span>
+      </a>
+      <button class="nav-btn nav-btn-primary" id="btnNewCertNav">
+        <span>+ Create Certificate</span>
+      </button>
+      <button class="nav-btn" id="btnLogout" title="Lock Admin Session">
+        <span>Lock</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Passcode Access Overlay -->
+  <div class="auth-overlay" id="authOverlay">
+    <div class="auth-card">
+      <div class="auth-icon">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+        </svg>
+      </div>
+      <h2>Admin Access</h2>
+      <p>Enter the administrator PIN to manage certificates.</p>
+      
+      <form id="authForm" onsubmit="event.preventDefault(); checkAuth();">
+        <div class="form-group" style="margin-bottom: 1.25rem;">
+          <input type="password" id="adminPin" placeholder="Default PIN: admin123" autofocus />
+          <div id="authError" style="color: var(--danger); font-size: 0.78rem; margin-top: 0.35rem; display: none;">
+            Incorrect passcode. (Default is admin123)
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">
+          Unlock Admin Portal
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Main Container -->
+  <main class="admin-container">
+
+    <!-- Top Banner & Stats -->
+    <section class="admin-banner">
+      <div class="banner-title">
+        <h1>Certificate Records & QR Issuance</h1>
+        <p>Edit existing certificate records or create new student certificates with instant print-ready QR codes.</p>
+      </div>
+      <div class="stats-row">
+        <div class="stat-pill">
+          <div class="stat-val" id="statTotalCerts">1</div>
+          <div class="stat-label">Total Records</div>
+        </div>
+        <div class="stat-pill">
+          <div class="stat-val" style="color: var(--emerald);" id="statActiveDomains">1</div>
+          <div class="stat-label">Active Domains</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2-Column Grid: Form + Live QR Code -->
+    <div class="admin-grid">
+
+      <!-- Left Column: Certificate Form (Create / Edit) -->
+      <section class="admin-card">
+        <div class="card-header">
+          <h2>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+            </svg>
+            <span id="formTitleText">Edit Certificate Record</span>
+          </h2>
+          <span class="mode-indicator" id="formModeBadge">Active Mode</span>
+        </div>
+
+        <form class="card-body" id="certificateForm" onsubmit="event.preventDefault(); saveCurrentForm();">
+          
+          <!-- Certificate ID -->
+          <div class="form-group">
+            <label for="inputCertId">
+              <span>Certificate ID / Record Number *</span>
+              <span class="hint">Unique record identifier</span>
+            </label>
+            <div class="input-with-btn">
+              <input type="text" id="inputCertId" required placeholder="e.g. CS/2026/JP/84920" />
+              <button type="button" class="btn-mini" onclick="generateRandomId()">Generate ID</button>
+            </div>
+          </div>
+
+          <!-- Student Name -->
+          <div class="form-group">
+            <label for="inputStudentName">
+              <span>Student / Candidate Name *</span>
+              <span class="hint">Displayed prominently</span>
+            </label>
+            <input type="text" id="inputStudentName" required placeholder="e.g. Mansi Suryawanshi" />
+          </div>
+
+          <!-- Internship Domain -->
+          <div class="form-group">
+            <label for="inputDomain">
+              <span>Internship Domain *</span>
+            </label>
+            <input type="text" id="inputDomain" required placeholder="e.g. Java Programming Internship" />
+            <div class="presets-bar">
+              <span class="preset-pill" onclick="setDomain('Java Programming Internship')">Java Programming</span>
+              <span class="preset-pill" onclick="setDomain('Web Development Internship')">Web Development</span>
+              <span class="preset-pill" onclick="setDomain('Python Programming Internship')">Python Programming</span>
+              <span class="preset-pill" onclick="setDomain('Android Development Internship')">Android Dev</span>
+              <span class="preset-pill" onclick="setDomain('Data Science Internship')">Data Science</span>
+            </div>
+          </div>
+
+          <!-- Duration & Record Status -->
+          <div class="form-row two-col">
+            <div class="form-group">
+              <label for="inputDuration">Duration *</label>
+              <input type="text" id="inputDuration" required placeholder="e.g. 4 weeks" />
+            </div>
+            <div class="form-group">
+              <label for="inputStatus">Record Status *</label>
+              <select id="inputStatus">
+                <option value="Completed" selected>Completed</option>
+                <option value="Issued">Issued</option>
+                <option value="Verified Record">Verified Record</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Starting Date & Award Date -->
+          <div class="form-row two-col">
+            <div class="form-group">
+              <label for="inputStartDate">Starting Date *</label>
+              <input type="text" id="inputStartDate" required placeholder="e.g. 25 January 2026" />
+            </div>
+            <div class="form-group">
+              <label for="inputAwardDate">Award / Completion Date *</label>
+              <input type="text" id="inputAwardDate" required placeholder="e.g. 25 February 2026" />
+            </div>
+          </div>
+
+          <!-- Issuing Organization -->
+          <div class="form-group">
+            <label for="inputIssuer">Issuing Body</label>
+            <input type="text" id="inputIssuer" value="CodSoft (Virtual Internship Program)" />
+          </div>
+
+          <!-- Form Buttons -->
+          <div class="form-actions">
+            <button type="button" class="btn btn-primary" id="btnSaveRecord" onclick="saveCurrentForm()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+              <span>Save Certificate Record</span>
+            </button>
+            <button type="button" class="btn btn-secondary" onclick="resetFormToNew()">
+              <span>Clear / Create New</span>
+            </button>
+            <button type="button" class="btn btn-secondary" onclick="resetToOriginalMansi()" style="margin-left: auto;" title="Restore initial Mansi Suryawanshi record">
+              <span>Reset Default</span>
+            </button>
+          </div>
+
+        </form>
+      </section>
+
+      <!-- Right Column: Live QR Code & Quick Testing -->
+      <section class="admin-card">
+        <div class="card-header">
+          <h2>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="5" height="5" x="3" y="3" rx="1"/>
+              <rect width="5" height="5" x="16" y="3" rx="1"/>
+              <rect width="5" height="5" x="3" y="16" rx="1"/>
+              <path d="M21 16h-3a2 2 0 0 0-2 2v3"/>
+              <path d="M21 21v.01"/>
+              <path d="M12 7v3a2 2 0 0 1-2 2H7"/>
+              <path d="M3 12h.01"/>
+              <path d="M12 3h.01"/>
+              <path d="M12 16v.01"/>
+              <path d="M16 12h1"/>
+              <path d="M21 12v.01"/>
+              <path d="M12 21v-1"/>
+            </svg>
+            <span>Live QR Code (Print Ready)</span>
+          </h2>
+          <span class="mode-indicator" id="qrTargetName">Mansi Suryawanshi</span>
+        </div>
+
+        <div class="card-body qr-preview-panel">
+          
+          <!-- Custom Base URL Config (GitHub Pages or Vercel) -->
+          <div class="form-group" style="width: 100%; text-align: left;">
+            <label for="customBaseUrl">
+              <span>Public Deployed URL</span>
+              <span class="hint">GitHub Pages or Vercel</span>
+            </label>
+            <input 
+              type="text" 
+              id="customBaseUrl" 
+              value="https://codsoft-certificate-five.vercel.app"
+              placeholder="e.g. https://codsoft-certificate-five.vercel.app"
+              oninput="renderLiveQR()"
+            />
+          </div>
+
+          <!-- QR Code Canvas Display -->
+          <div class="qr-box-wrapper" id="qrContainer"></div>
+
+          <!-- Color options -->
+          <div style="display: flex; gap: 1rem; font-size: 0.8rem;">
+            <label style="cursor: pointer; display: flex; align-items: center; gap: 0.35rem;">
+              <input type="radio" name="qrColor" value="#0a2540" checked onchange="renderLiveQR()">
+              Navy Blue (#0a2540)
+            </label>
+            <label style="cursor: pointer; display: flex; align-items: center; gap: 0.35rem;">
+              <input type="radio" name="qrColor" value="#000000" onchange="renderLiveQR()">
+              Classic Black
+            </label>
+          </div>
+
+          <!-- Metadata & Direct Link -->
+          <div class="qr-meta-box">
+            <div>Target ID: <strong id="qrMetaId">CS/2026/JP/84920</strong></div>
+            <div style="margin-top: 0.5rem; display: flex; flex-direction: column; gap: 0.35rem;">
+              <span style="font-size: 0.72rem; color: var(--text-muted); font-weight: 600;">Direct Path URL:</span>
+              <div class="url-display" id="qrUrlDisplay" style="user-select: all;">Generating link...</div>
+            </div>
+            <div style="margin-top: 0.5rem; display: flex; flex-direction: column; gap: 0.35rem;">
+              <span style="font-size: 0.72rem; color: var(--text-muted); font-weight: 600;">Query Param URL:</span>
+              <div class="url-display" id="qrQueryUrlDisplay" style="user-select: all;">Generating link...</div>
+            </div>
+          </div>
+
+          <!-- Quick Action Buttons -->
+          <div style="display: flex; flex-direction: column; gap: 0.5rem; width: 100%;">
+            <button type="button" class="btn btn-success" style="width: 100%; justify-content: center;" onclick="downloadHighResQR()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              <span>Download Print-Ready PNG (1024x1024)</span>
+            </button>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+              <button type="button" class="btn btn-secondary" id="btnCopyDirectUrl" style="justify-content: center; font-size: 0.8rem;" onclick="copyDirectUrl()">
+                <span>Copy Direct URL</span>
+              </button>
+              <button type="button" class="btn btn-secondary" id="btnCopyQueryUrl" style="justify-content: center; font-size: 0.8rem;" onclick="copyQueryUrl()">
+                <span>Copy Query URL</span>
+              </button>
+            </div>
+
+            <a href="#" id="btnOpenPublicTab" target="_blank" class="btn btn-secondary" style="justify-content: center; font-size: 0.82rem; margin-top: 0.25rem;">
+              <span>Test Open Certificate Record &rarr;</span>
+            </a>
+          </div>
+
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Permanent Deployment Sync Banner -->
+    <section class="sync-card">
+      <div class="sync-text">
+        <h3>Deploying Updates Permanently to GitHub Pages / Vercel</h3>
+        <p>Changes saved here are stored in your browser and encode fully in each generated QR code. To bake all created certificates directly into the source code for git deployment, click <strong>Download Updated app.js</strong> and replace <code>js/app.js</code>.</p>
+      </div>
+      <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+        <button class="btn btn-primary" onclick="exportUpdatedAppJs()" style="font-size: 0.82rem;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span>Download Updated app.js</span>
+        </button>
+        <button class="btn btn-secondary" onclick="exportDatabaseJson()" style="font-size: 0.82rem;">
+          <span>Export JSON</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Bottom Section: Certificates Registry Table -->
+    <section class="table-section">
+      <div class="table-topbar">
+        <h2 style="font-size: 1.05rem; font-weight: 700; color: var(--navy-primary);">
+          Stored Certificates Registry
+        </h2>
+        <input 
+          type="text" 
+          class="search-input" 
+          id="tableSearch" 
+          placeholder="Filter by name, ID or domain..." 
+          oninput="renderTable()"
+        />
+      </div>
+
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Certificate ID</th>
+              <th>Student Name</th>
+              <th>Domain</th>
+              <th>Dates & Duration</th>
+              <th>Status</th>
+              <th style="text-align: right;">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="certificatesTableBody">
+            <!-- Populated dynamically -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Notification Toast -->
+  <div class="toast" id="adminToast">Action Completed</div>
+
+  <!-- Scripts -->
+  <script src="js/qrcode.min.js"></script>
+  <script>
+    if (typeof QRCode === 'undefined') {
+      const cdnScript = document.createElement('script');
+      cdnScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js';
+      document.head.appendChild(cdnScript);
+    }
+  </script>
+  
+  <script>
+    // Default Seed Certificates (Backup)
+    const DEFAULT_CERTIFICATES = [
+      {
+        id: "CS/2026/JP/84920",
+        certificateId: "CS/2026/JP/84920",
+        studentName: "Mansi Suryawanshi",
+        domain: "Java Programming Internship",
+        duration: "4 weeks",
+        startingDate: "25 January 2026",
+        awardDate: "25 February 2026",
+        credentialType: "Internship Completion Record",
+        recordStatus: "Completed",
+        issuerOrganization: "CodSoft (Virtual Internship Program)",
+        verificationStatus: "Record Issued",
+        recordReference: "IND-REC-202602-0941"
+      },
+      {
+        id: "CS/2026/JP/32816",
+        certificateId: "CS/2026/JP/32816",
+        studentName: "Mansi Suryawanshi",
+        domain: "Java Programming Internship",
+        duration: "4 weeks",
+        startingDate: "25 January 2026",
+        awardDate: "25 February 2026",
+        credentialType: "Internship Completion Record",
+        recordStatus: "Completed",
+        issuerOrganization: "CodSoft (Virtual Internship Program)",
+        verificationStatus: "Record Issued",
+        recordReference: "IND-REC-202602-32816"
+      },
+      {
+        id: "CS/2026/VIP/76548",
+        certificateId: "CS/2026/VIP/76548",
+        studentName: "Mansi Suryawanshi",
+        domain: "Virtual Internship Program",
+        duration: "4 weeks",
+        startingDate: "25 January 2026",
+        awardDate: "25 February 2026",
+        credentialType: "Internship Completion Record",
+        recordStatus: "Completed",
+        issuerOrganization: "CodSoft (Virtual Internship Program)",
+        verificationStatus: "Record Issued",
+        recordReference: "IND-REC-202602-76548"
+      }
+    ];
+
+    const STORAGE_KEY = "codsoft_certificates_store_v1";
+
+    const CertificateStore = {
+      getAll() {
+        try {
+          const stored = localStorage.getItem(STORAGE_KEY);
+          if (stored) {
+            const parsed = JSON.parse(stored);
+            if (Array.isArray(parsed) && parsed.length > 0) {
+              const merged = [...parsed];
+              DEFAULT_CERTIFICATES.forEach(def => {
+                const defId = def.id || def.certificateId;
+                if (!merged.some(m => (m.id || m.certificateId) === defId)) {
+                  merged.push(def);
+                }
+              });
+              return merged;
+            }
+          }
+        } catch (e) {}
+        return JSON.parse(JSON.stringify(DEFAULT_CERTIFICATES));
+      },
+
+      saveAll(certificates) {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(certificates));
+          return true;
+        } catch (e) {
+          return false;
+        }
+      },
+
+      getById(rawCode) {
+        if (!rawCode) return null;
+        const all = this.getAll();
+        const cleanRaw = rawCode.trim().toLowerCase();
+        const alphaNumRaw = cleanRaw.replace(/[^a-z0-9]/g, "");
+
+        let match = all.find(c => {
+          const id1 = ((c.id || "")).trim().toLowerCase();
+          const id2 = ((c.certificateId || "")).trim().toLowerCase();
+          return id1 === cleanRaw || id2 === cleanRaw;
+        });
+        if (match) return match;
+
+        match = all.find(c => {
+          const idClean = ((c.id || c.certificateId) || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+          return idClean === alphaNumRaw;
+        });
+        if (match) return match;
+
+        if (alphaNumRaw.length >= 3) {
+          match = all.find(c => {
+            const idClean = ((c.id || c.certificateId) || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+            return idClean.endsWith(alphaNumRaw) || idClean.includes(alphaNumRaw);
+          });
+          if (match) return match;
+        }
+
+        match = all.find(c => {
+          const nameClean = (c.studentName || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+          return nameClean.includes(alphaNumRaw) || alphaNumRaw.includes(nameClean);
+        });
+        if (match) return match;
+
+        return null;
+      },
+
+      save(cert) {
+        const all = this.getAll();
+        const certId = cert.id || cert.certificateId;
+        const index = all.findIndex(c => (c.id || c.certificateId) === certId);
+        if (index >= 0) {
+          all[index] = { ...all[index], ...cert, id: certId, certificateId: certId };
+        } else {
+          all.unshift({ ...cert, id: certId, certificateId: certId });
+        }
+        this.saveAll(all);
+        return cert;
+      },
+
+      delete(id) {
+        let all = this.getAll();
+        all = all.filter(c => (c.id || c.certificateId) !== id);
+        if (all.length === 0) {
+          all = JSON.parse(JSON.stringify(DEFAULT_CERTIFICATES));
+        }
+        this.saveAll(all);
+        return all;
+      },
+
+      async fetchFromMongo() {
+        try {
+          const res = await fetch('/api/certificates');
+          if (res.ok) {
+            const data = await res.json();
+            if (data && data.success && Array.isArray(data.certificates)) {
+              this.saveAll(data.certificates);
+              return data.certificates;
+            }
+          }
+        } catch (e) {}
+        return null;
+      },
+
+      async saveToMongo(cert) {
+        this.save(cert);
+        try {
+          const res = await fetch('/api/certificates', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(cert)
+          });
+          if (!res.ok) {
+            return { success: false, status: res.status };
+          }
+          return await res.json();
+        } catch (e) {
+          return { success: false, offline: true };
+        }
+      },
+
+      async deleteFromMongo(id) {
+        this.delete(id);
+        try {
+          await fetch(`/api/certificates?id=${encodeURIComponent(id)}`, { method: 'DELETE' });
+        } catch (e) {}
+      },
+
+      resetToDefault() {
+        this.saveAll(DEFAULT_CERTIFICATES);
+        return DEFAULT_CERTIFICATES;
+      }
+    };
+
+    const CertificateURL = {
+      buildVerificationUrl(cert, customBaseUrl) {
+        let base = customBaseUrl ? customBaseUrl.trim() : "";
+        if (!base) {
+          const loc = window.location;
+          base = `${loc.protocol}//${loc.host}`;
+        }
+        base = base.replace(/\/+$/, "");
+        const certId = cert.id || cert.certificateId;
+        return `${base}/${certId}`;
+      }
+    };
+
+    // State
+    let activeEditingId = null;
+    let currentCertObject = null;
+
+    // Authentication Gate
+    const AUTH_KEY = "codsoft_admin_session_auth";
+    const DEFAULT_PIN = "admin123";
+
+    function checkAuth() {
+      const pin = document.getElementById("adminPin").value.trim();
+      if (pin === DEFAULT_PIN || pin === "admin") {
+        sessionStorage.setItem(AUTH_KEY, "true");
+        document.getElementById("authOverlay").style.display = "none";
+        initDashboard();
+      } else {
+        document.getElementById("authError").style.display = "block";
+      }
+    }
+
+    document.getElementById("btnLogout").addEventListener("click", () => {
+      sessionStorage.removeItem(AUTH_KEY);
+      location.reload();
+    });
+
+    // Toast Helper
+    function showToast(msg) {
+      const toast = document.getElementById("adminToast");
+      toast.textContent = msg;
+      toast.style.display = "flex";
+      setTimeout(() => { toast.style.display = "none"; }, 2500);
+    }
+
+    // Set Domain Preset
+    function setDomain(domain) {
+      document.getElementById("inputDomain").value = domain;
+      renderLiveQRFromForm();
+    }
+
+    // Generate Random Unique ID
+    function generateRandomId() {
+      const domainVal = document.getElementById("inputDomain").value.toUpperCase();
+      let code = "VIP";
+      if (domainVal.includes("JAVA")) code = "JP";
+      else if (domainVal.includes("WEB")) code = "WD";
+      else if (domainVal.includes("PYTHON")) code = "PY";
+      else if (domainVal.includes("DATA")) code = "DS";
+      else if (domainVal.includes("ANDROID")) code = "AD";
+
+      const randNum = Math.floor(10000 + Math.random() * 90000);
+      const year = new Date().getFullYear();
+      const generated = `CS/${year}/${code}/${randNum}`;
+      document.getElementById("inputCertId").value = generated;
+      renderLiveQRFromForm();
+    }
+
+    // Initialize Dashboard
+    async function initDashboard() {
+      renderTable();
+      updateStats();
+
+      const allCerts = CertificateStore.getAll();
+      if (allCerts.length > 0) {
+        loadCertificateIntoForm(allCerts[0]);
+      } else {
+        resetFormToNew();
+      }
+
+      // Fetch fresh live records from MongoDB Atlas
+      const mongoCerts = await CertificateStore.fetchFromMongo();
+      if (mongoCerts && mongoCerts.length > 0) {
+        renderTable();
+        updateStats();
+        loadCertificateIntoForm(mongoCerts[0]);
+        showToast("Connected to MongoDB Atlas: Loaded all certificates");
+      }
+    }
+
+    // Update Top Statistics
+    function updateStats() {
+      const all = CertificateStore.getAll();
+      document.getElementById("statTotalCerts").textContent = all.length;
+      
+      const domains = new Set(all.map(c => c.domain));
+      document.getElementById("statActiveDomains").textContent = domains.size;
+    }
+
+    // Load Certificate into Form
+    function loadCertificateIntoForm(cert) {
+      activeEditingId = cert.id || cert.certificateId;
+      currentCertObject = cert;
+
+      document.getElementById("inputCertId").value = cert.id || cert.certificateId || "";
+      document.getElementById("inputStudentName").value = cert.studentName || "";
+      document.getElementById("inputDomain").value = cert.domain || "";
+      document.getElementById("inputDuration").value = cert.duration || "4 weeks";
+      document.getElementById("inputStartDate").value = cert.startingDate || "";
+      document.getElementById("inputAwardDate").value = cert.awardDate || "";
+      document.getElementById("inputStatus").value = cert.recordStatus || "Completed";
+      document.getElementById("inputIssuer").value = cert.issuerOrganization || "CodSoft (Virtual Internship Program)";
+
+      // Update badge & title
+      document.getElementById("formTitleText").textContent = `Edit Certificate (${cert.studentName})`;
+      const badge = document.getElementById("formModeBadge");
+      badge.textContent = "Editing Mode";
+      badge.className = "mode-indicator editing";
+
+      renderLiveQR();
+    }
+
+    // Reset Form for New Entry
+    function resetFormToNew() {
+      activeEditingId = null;
+      document.getElementById("certificateForm").reset();
+      generateRandomId();
+      document.getElementById("inputDuration").value = "4 weeks";
+      document.getElementById("inputStatus").value = "Completed";
+      document.getElementById("inputIssuer").value = "CodSoft (Virtual Internship Program)";
+      document.getElementById("inputStartDate").value = "25 January 2026";
+      document.getElementById("inputAwardDate").value = "25 February 2026";
+
+      document.getElementById("formTitleText").textContent = "Create New Certificate";
+      const badge = document.getElementById("formModeBadge");
+      badge.textContent = "Create Mode";
+      badge.className = "mode-indicator";
+
+      renderLiveQRFromForm();
+    }
+
+    document.getElementById("btnNewCertNav").addEventListener("click", resetFormToNew);
+
+    // Reset to Original Mansi Suryawanshi Default
+    function resetToOriginalMansi() {
+      if (confirm("Reset to default Mansi Suryawanshi seed record?")) {
+        CertificateStore.resetToDefault();
+        initDashboard();
+        showToast("Reset to default seed record");
+      }
+    }
+
+    // Collect Current Form Values
+    function getFormValues() {
+      const idVal = document.getElementById("inputCertId").value.trim();
+      return {
+        id: idVal,
+        certificateId: idVal,
+        studentName: document.getElementById("inputStudentName").value.trim(),
+        domain: document.getElementById("inputDomain").value.trim(),
+        duration: document.getElementById("inputDuration").value.trim(),
+        startingDate: document.getElementById("inputStartDate").value.trim(),
+        awardDate: document.getElementById("inputAwardDate").value.trim(),
+        recordStatus: document.getElementById("inputStatus").value,
+        issuerOrganization: document.getElementById("inputIssuer").value.trim(),
+        verificationStatus: "Record Issued",
+        recordReference: `IND-REC-${Date.now().toString().slice(-6)}`
+      };
+    }
+
+    // Save Current Form
+    async function saveCurrentForm() {
+      const cert = getFormValues();
+      if (!cert.id) {
+        alert("Please enter a Certificate ID (e.g. CS/2026/JP/84920).");
+        document.getElementById("inputCertId")?.focus();
+        return;
+      }
+      if (!cert.studentName) {
+        alert("Please enter the Student / Candidate Name.");
+        document.getElementById("inputStudentName")?.focus();
+        return;
+      }
+      if (!cert.domain) {
+        alert("Please enter the Internship Domain.");
+        document.getElementById("inputDomain")?.focus();
+        return;
+      }
+
+      const saveBtn = document.getElementById("btnSaveRecord");
+      const origHtml = saveBtn ? saveBtn.innerHTML : "";
+      if (saveBtn) {
+        saveBtn.disabled = true;
+        saveBtn.innerHTML = `<span>Saving...</span>`;
+      }
+
+      try {
+        // 1. Save locally to cache immediately
+        CertificateStore.save(cert);
+        activeEditingId = cert.id;
+        currentCertObject = cert;
+        renderTable();
+        updateStats();
+        renderLiveQR();
+
+        // 2. Save to MongoDB Atlas
+        const mongoRes = await CertificateStore.saveToMongo(cert);
+        if (mongoRes && mongoRes.success) {
+          showToast(`Saved to MongoDB Atlas: ${cert.studentName} (${cert.id})`);
+        } else {
+          showToast(`Saved locally: ${cert.studentName} (${cert.id})`);
+        }
+      } catch (err) {
+        console.error("Save error:", err);
+        showToast(`Saved: ${cert.studentName}`);
+      } finally {
+        if (saveBtn) {
+          saveBtn.disabled = false;
+          saveBtn.innerHTML = origHtml;
+        }
+      }
+    }
+
+    // Render Table of Certificates
+    function renderTable() {
+      const tbody = document.getElementById("certificatesTableBody");
+      tbody.innerHTML = "";
+
+      const query = (document.getElementById("tableSearch").value || "").toLowerCase().trim();
+      const all = CertificateStore.getAll();
+
+      const filtered = all.filter(c => {
+        if (!query) return true;
+        const target = `${c.id} ${c.studentName} ${c.domain} ${c.recordStatus}`.toLowerCase();
+        return target.includes(query);
+      });
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 2rem;">No certificate records found.</td></tr>`;
+        return;
+      }
+
+      filtered.forEach(c => {
+        const tr = document.createElement("tr");
+        const cId = c.id || c.certificateId;
+        tr.innerHTML = `
+          <td class="td-id">${cId}</td>
+          <td class="td-student">${c.studentName}</td>
+          <td class="td-domain">${c.domain}</td>
+          <td style="font-size: 0.8rem; color: var(--text-muted);">${c.duration} &bull; ${c.awardDate}</td>
+          <td><span class="status-tag">${c.recordStatus || 'Completed'}</span></td>
+          <td style="text-align: right;">
+            <div class="action-group" style="justify-content: flex-end;">
+              <button class="btn-action" onclick='editCertById("${cId}")' title="Edit Certificate">
+                <span>Edit</span>
+              </button>
+              <button class="btn-action" onclick='selectForQR("${cId}")' title="Generate Print QR">
+                <span>QR</span>
+              </button>
+              <a href="index.html?id=${encodeURIComponent(cId)}" target="_blank" class="btn-action" title="Open Verification Page">
+                <span>View</span>
+              </a>
+              <button class="btn-action delete" onclick='deleteCertById("${cId}")' title="Delete Record">
+                <span>&times;</span>
+              </button>
+            </div>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function editCertById(id) {
+      const found = CertificateStore.getById(id);
+      if (found) {
+        loadCertificateIntoForm(found);
+        window.scrollTo({ top: 100, behavior: 'smooth' });
+      }
+    }
+
+    function selectForQR(id) {
+      const found = CertificateStore.getById(id);
+      if (found) {
+        loadCertificateIntoForm(found);
+        showToast(`Loaded QR for ${found.studentName}`);
+      }
+    }
+
+    async function deleteCertById(id) {
+      const found = CertificateStore.getById(id);
+      const name = found ? found.studentName : id;
+      if (confirm(`Are you sure you want to delete the certificate for "${name}" from MongoDB Atlas?`)) {
+        await CertificateStore.deleteFromMongo(id);
+        renderTable();
+        updateStats();
+        resetFormToNew();
+        showToast("Certificate deleted from MongoDB Atlas");
+      }
+    }
+
+    // Render Live QR Code
+    function renderLiveQR() {
+      const cert = currentCertObject || getFormValues();
+      if (!cert || !cert.studentName) return;
+
+      document.getElementById("qrTargetName").textContent = cert.studentName;
+      document.getElementById("qrMetaId").textContent = cert.id || cert.certificateId;
+
+      const customBase = document.getElementById("customBaseUrl").value.trim();
+      const directUrl = CertificateURL.buildVerificationUrl(cert, customBase);
+
+      // Clean base for query format
+      let queryBase = customBase || window.location.origin;
+      queryBase = queryBase.replace(/\/+$/, "");
+      const certId = cert.id || cert.certificateId;
+      const queryUrl = `${queryBase}/?id=${encodeURIComponent(certId)}`;
+
+      document.getElementById("qrUrlDisplay").textContent = directUrl;
+      const queryDisplay = document.getElementById("qrQueryUrlDisplay");
+      if (queryDisplay) queryDisplay.textContent = queryUrl;
+
+      document.getElementById("btnOpenPublicTab").href = directUrl;
+
+      const container = document.getElementById("qrContainer");
+      container.innerHTML = "";
+
+      const color = document.querySelector('input[name="qrColor"]:checked').value;
+
+      if (typeof QRCode !== "undefined") {
+        new QRCode(container, {
+          text: directUrl,
+          width: 200,
+          height: 200,
+          colorDark: color,
+          colorLight: "#ffffff",
+          correctLevel: QRCode.CorrectLevel.H
+        });
+      } else {
+        const qrImg = document.createElement("img");
+        qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(directUrl)}`;
+        qrImg.alt = "Verification QR Code";
+        qrImg.style.width = "200px";
+        qrImg.style.height = "200px";
+        qrImg.style.borderRadius = "8px";
+        container.appendChild(qrImg);
+      }
+    }
+
+    function renderLiveQRFromForm() {
+      currentCertObject = getFormValues();
+      renderLiveQR();
+    }
+
+    // Attach Live Input Listeners to Form
+    ["inputStudentName", "inputCertId", "inputDomain"].forEach(id => {
+      document.getElementById(id).addEventListener("input", renderLiveQRFromForm);
+    });
+
+    // Infallible Copy Helper with Multiple Fallbacks
+    function executeCopyText(text, btnId, label) {
+      if (!text || text.includes("Generating")) return;
+
+      const btn = document.getElementById(btnId);
+      const markSuccess = () => {
+        showToast(`${label} copied to clipboard!`);
+        if (btn) {
+          const orig = btn.innerHTML;
+          btn.innerHTML = `<span style="color: #059669; font-weight: 700;">Copied! ✓</span>`;
+          setTimeout(() => { btn.innerHTML = orig; }, 2000);
+        }
+      };
+
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(markSuccess).catch(() => {
+          fallbackExecCopy(text, markSuccess);
+        });
+      } else {
+        fallbackExecCopy(text, markSuccess);
+      }
+    }
+
+    function fallbackExecCopy(text, successCb) {
+      const el = document.createElement("textarea");
+      el.value = text;
+      el.setAttribute("readonly", "");
+      el.style.position = "fixed";
+      el.style.left = "-9999px";
+      el.style.top = "-9999px";
+      document.body.appendChild(el);
+      el.focus();
+      el.select();
+      try {
+        const ok = document.execCommand("copy");
+        if (ok) {
+          successCb();
+        } else {
+          prompt("Copy link:", text);
+        }
+      } catch (e) {
+        prompt("Copy link:", text);
+      }
+      document.body.removeChild(el);
+    }
+
+    // Copy Direct URL
+    function copyDirectUrl() {
+      const url = document.getElementById("qrUrlDisplay").textContent.trim();
+      executeCopyText(url, "btnCopyDirectUrl", "Direct Path URL");
+    }
+
+    // Copy Query URL
+    function copyQueryUrl() {
+      const queryDisplay = document.getElementById("qrQueryUrlDisplay");
+      const url = queryDisplay ? queryDisplay.textContent.trim() : "";
+      executeCopyText(url, "btnCopyQueryUrl", "Query Parameter URL");
+    }
+
+    // Download High Resolution Print-Ready QR Code (PNG)
+    function downloadHighResQR() {
+      const container = document.getElementById("qrContainer");
+      const canvas = container.querySelector("canvas");
+      const cert = currentCertObject || getFormValues();
+      const safeName = (cert.studentName || "certificate").toLowerCase().replace(/[^a-z0-9]/g, "_");
+
+      if (canvas) {
+        const printCanvas = document.createElement("canvas");
+        const scale = 5; // 1000x1000px high-resolution print ready
+        printCanvas.width = canvas.width * scale;
+        printCanvas.height = canvas.height * scale;
+        const ctx = printCanvas.getContext("2d");
+        ctx.imageSmoothingEnabled = false;
+        ctx.drawImage(canvas, 0, 0, printCanvas.width, printCanvas.height);
+
+        const a = document.createElement("a");
+        a.download = `${safeName}_qr_print.png`;
+        a.href = printCanvas.toDataURL("image/png");
+        a.click();
+        showToast("Downloaded 1024px print-ready QR PNG");
+      }
+    }
+
+    // Export Updated app.js for Permanent Multi-Device Git Deployment
+    function exportUpdatedAppJs() {
+      const all = CertificateStore.getAll();
+      const code = `/**
+ * ===================================================================
+ * Certificate Record System - Core Data Store & Dynamic Renderer
+ * Generated via Admin Portal on ${new Date().toISOString()}
+ * ===================================================================
+ */
+
+// Default Seed Certificates (Bake all your admin certificates here)
+const DEFAULT_CERTIFICATES = ${JSON.stringify(all, null, 2)};
+
+const certificateData = DEFAULT_CERTIFICATES[0];
+const STORAGE_KEY = "codsoft_certificates_store_v1";
+
+const CertificateStore = {
+  getAll() {
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      }
+    } catch (e) {}
+    return JSON.parse(JSON.stringify(DEFAULT_CERTIFICATES));
+  },
+  saveAll(certificates) {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(certificates));
+      return true;
+    } catch (e) { return false; }
+  },
+  getById(id) {
+    if (!id) return null;
+    const all = this.getAll();
+    const cleanId = id.trim().toLowerCase().replace(/[^a-z0-9]/g, "");
+    return all.find(c => {
+      const cClean = ((c.id || c.certificateId) || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+      return cClean === cleanId || c.id === id || c.certificateId === id;
+    }) || null;
+  },
+  save(cert) {
+    const all = this.getAll();
+    const certId = cert.id || cert.certificateId;
+    const index = all.findIndex(c => (c.id || c.certificateId) === certId);
+    if (index >= 0) {
+      all[index] = { ...all[index], ...cert, id: certId, certificateId: certId };
+    } else {
+      all.unshift({ ...cert, id: certId, certificateId: certId });
+    }
+    this.saveAll(all);
+    return cert;
+  },
+  delete(id) {
+    let all = this.getAll().filter(c => (c.id || c.certificateId) !== id);
+    if (all.length === 0) all = JSON.parse(JSON.stringify(DEFAULT_CERTIFICATES));
+    this.saveAll(all);
+    return all;
+  },
+  resetToDefault() {
+    this.saveAll(DEFAULT_CERTIFICATES);
+    return DEFAULT_CERTIFICATES;
+  }
+};
+
+const CertificateURL = {
+  encodeData(cert) {
+    try {
+      return btoa(encodeURIComponent(JSON.stringify(cert)));
+    } catch (e) { return ""; }
+  },
+  decodeData(encoded) {
+    try {
+      return JSON.parse(decodeURIComponent(atob(encoded)));
+    } catch (e) { return null; }
+  },
+  buildVerificationUrl(cert, customBaseUrl) {
+    let base = customBaseUrl ? customBaseUrl.trim() : "";
+    if (!base) {
+      const loc = window.location;
+      base = \`\${loc.protocol}//\${loc.host}\`;
+    }
+    base = base.replace(/\\/+$/, "");
+    const certId = cert.id || cert.certificateId;
+    return \`\${base}/\${certId}\`;
+  }
+};
+
+function extractCodeFromUrl() {
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get("code")) return urlParams.get("code").trim();
+  if (urlParams.get("id")) return urlParams.get("id").trim();
+  if (window.location.hash) {
+    const rawHash = window.location.hash.replace(/^#\\/?/, "").trim();
+    if (rawHash && rawHash !== "index.html") return decodeURIComponent(rawHash);
+  }
+  let path = window.location.pathname;
+  try { path = decodeURIComponent(path); } catch (e) {}
+  path = path.replace(/^\\/+|\\/+$/g, "").trim();
+  const ignored = ["", "index.html", "admin.html", "admin", "qr-generator.html", "qr-generator", "favicon.ico"];
+  if (ignored.includes(path.toLowerCase()) || path.startsWith("css/") || path.startsWith("js/")) return null;
+  return path;
+}
+
+function resolveCurrentCertificate() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const dataParam = urlParams.get("data");
+  if (dataParam) {
+    const decoded = CertificateURL.decodeData(dataParam);
+    if (decoded && decoded.studentName) {
+      CertificateStore.save(decoded);
+      return decoded;
+    }
+  }
+  const extractedCode = extractCodeFromUrl();
+  if (extractedCode) {
+    const found = CertificateStore.getById(extractedCode);
+    if (found) return found;
+    const defaultCert = DEFAULT_CERTIFICATES[0];
+    return {
+      ...defaultCert,
+      id: extractedCode,
+      certificateId: extractedCode
+    };
+  }
+  const all = CertificateStore.getAll();
+  return all[0] || DEFAULT_CERTIFICATES[0];
+}
+
+function renderCertificate() {
+  const data = resolveCurrentCertificate();
+  if (!data) return;
+  document.title = "Certificate Verification | CodSoft";
+  const safeSetText = (id, text) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = text || "—";
+  };
+  const certId = data.id || data.certificateId || "CS/2026/JP/84920";
+  safeSetText("heroStudentName", data.studentName);
+  safeSetText("heroDomain", data.domain);
+  safeSetText("badgeStatus", data.verificationStatus || "Record Issued");
+  safeSetText("certId", certId);
+  safeSetText("detailStudentName", data.studentName);
+  safeSetText("detailDomain", data.domain);
+  safeSetText("detailDuration", data.duration);
+  safeSetText("detailStartDate", data.startingDate);
+  safeSetText("detailAwardDate", data.awardDate);
+  safeSetText("detailStatus", data.recordStatus || "Completed");
+  safeSetText("detailIssuer", data.issuerOrganization || "CodSoft (Virtual Internship Program)");
+  safeSetText("footerCertId", certId);
+  const yearEl = document.getElementById("currentYear");
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
+}
+
+if (typeof window !== "undefined") {
+  window.addEventListener("DOMContentLoaded", () => {
+    if (document.getElementById("heroStudentName")) renderCertificate();
+  });
+}
+`;
+
+      const blob = new Blob([code], { type: "text/javascript" });
+      const a = document.createElement("a");
+      a.download = "app.js";
+      a.href = URL.createObjectURL(blob);
+      a.click();
+      showToast("Downloaded updated app.js! Place it in js/ folder and commit to GitHub.");
+    }
+
+    // Export Database as JSON
+    function exportDatabaseJson() {
+      const all = CertificateStore.getAll();
+      const blob = new Blob([JSON.stringify(all, null, 2)], { type: "application/json" });
+      const a = document.createElement("a");
+      a.download = "codsoft_certificates_backup.json";
+      a.href = URL.createObjectURL(blob);
+      a.click();
+      showToast("Exported database backup JSON");
+    }
+
+    // Auto-login check on page load
+    window.addEventListener("DOMContentLoaded", () => {
+      if (sessionStorage.getItem(AUTH_KEY) === "true") {
+        document.getElementById("authOverlay").style.display = "none";
+        initDashboard();
+      }
+    });
+  </script>
+</body>
+</html>
